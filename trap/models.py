@@ -7,6 +7,6 @@ class req_records(models.Model):
     req_method = models.CharField(max_length=20)
     scheme = models.CharField(max_length=10)
     query_string = models.TextField()
-    qwery_parameters = models.TextField()
+    query_parameters = models.TextField()
     cookies = models.TextField()
     headers = models.TextField()

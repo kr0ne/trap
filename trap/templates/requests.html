@@ -6,7 +6,6 @@
 </head>
 <body>
 {% if req_array %}
-    <p>{{ req_array }}</p>
 <table border="1">
    <caption>Current request</caption>
    <tr>
@@ -18,6 +17,16 @@
     <th>Query parameters</th>
     <th>Cookies</th>
     <th>Headers</th>
+   </tr>
+    <tr>
+       <td>{{ req_array.req_time }}</td>
+       <td>{{ req_array.rem_ip }}</td>
+       <td>{{ req_array.req_method }}</td>
+       <td>{{ req_array.scheme }}</td>
+       <td>{{ req_array.query_string }}</td>
+       <td>{{ req_array.query_parameters }}</td>
+       <td>{{ req_array.cookies }}</td>
+       <td>{{ req_array.headers }}</td>
    </tr>
    <tr>
        <td>34,5</td>
