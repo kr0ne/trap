@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load staticfiles %}
     <meta charset="UTF-8">
-    <title></title>
+    <title>Current request page</title>
+    <link rel="stylesheet" href="{% static "style.css" %}">
 </head>
 <body>
 {% if req_array %}
@@ -19,14 +21,24 @@
     <th>Headers</th>
    </tr>
     <tr>
-       <td>{{ req_array.req_time }}</td>
+       <td class="date">{{ req_array.req_time|date:"M d, Y H:i:s" }}
+       </td>
        <td>{{ req_array.rem_ip }}</td>
        <td>{{ req_array.req_method }}</td>
        <td>{{ req_array.scheme }}</td>
        <td>{{ req_array.query_string }}</td>
-       <td>{{ req_array.query_parameters }}</td>
-       <td>{{ req_array.cookies }}</td>
-       <td>{{ req_array.headers }}</td>
+       <td>{% for k,v in req_array.query_parameters.items  %}
+           {{ k }} = {{ v }}<br>
+           {% endfor %}
+       </td>
+       <td>{% for cook, val in req_array.cookies.items %}
+           <b>{{ cook }}</b>={{ val }}<br   >
+           {% endfor %}
+       </td>
+       <td><div class="headers"> {% for key, value in req_array.headers.items %}
+        <b>{{ key }}</b> -- {{ value }}<br>
+        {% endfor %}</div>
+       </td>
    </tr>
     </table>
 {% else %}

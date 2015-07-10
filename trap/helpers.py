@@ -1,9 +1,12 @@
 __author__ = 'sunde'
+import re
 from datetime import datetime
+from django.utils import timezone
 
 
 def get_current_time():
-    return datetime.now()
+    current_time = timezone.now()
+    return current_time
 
 
 def get_rem_ip_address(request):
@@ -31,9 +34,11 @@ def get_query_parameters(request):
     method = get_request_method(request)
     pretty_string = ""
     if method == 'GET':
+        pretty_string += "\nGet parameters: \n"
         get_dict = request.GET
-        for k, v in get_dict.items():
-            pretty_string += "key=%s, value=%s\t" % (k, v)
+        return get_dict
+        #for k, v in get_dict.items():
+        #    pretty_string += "key=%s, value=%s\n" % (k, v)
     elif method == 'POST':
         post_dict = request.POST
         if post_dict:
@@ -54,4 +59,7 @@ def get_cookies(request):
 
 
 def get_request_headers(request):
-    return request.META
+    regex = re.compile('^HTTP_')
+    a = dict((regex.sub('', header), value) for (header, value)
+        in request.META.items() if header.startswith('HTTP_'))
+    return a
