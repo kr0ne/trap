@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if all_records %}
+<table border="1">
+   <caption>Previous requests</caption>
+   <tr>
+    <th>Request date</th>
+    <th>Remote IP</th>
+    <th>Request method</th>
+    <th>Scheme</th>
+    <th>Query string</th>
+    <th>Query parameters</th>
+    <th>Cookies</th>
+    <th>Headers</th>
+   </tr>
+    {% for record in all_records %}
+    <tr>
+       <td class="date">{{ record.req_date|date:"M d, Y H:i:s" }}
+       </td>
+       <td>{{ record.rem_ip }}</td>
+       <td>{{ record.req_method }}</td>
+       <td>{{ record.scheme }}</td>
+       <td>{{ record.query_string }}</td>
+       <td>{% for k,v in record.query_parameters.iteritems %}
+           {{ k }} = {{ v }}<br> -
+           {% endfor %}
+       </td>
+       <td>{% for cook, val in record.cookies.items %}
+           <b>{{ cook }}</b>={{ val }}<br   >
+           {% endfor %}
+       </td>
+       <td><div class="headers"> {% for key, value in record.headers.items %}
+        <b>{{ key }}</b> -- {{ value }}<br>
+        {% endfor %}</div>
+       </td>
+    </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>No data to display</p>
+{% endif %}
+</body>
+</html>

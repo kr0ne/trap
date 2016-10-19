@@ -1,7 +1,7 @@
-__author__ = 'sunde'
 from django.db import models
 
-class req_records(models.Model):
+
+class ReqRecords(models.Model):
     req_date = models.DateTimeField("Date of request")
     rem_ip = models.GenericIPAddressField("Field for IP adresses")
     req_method = models.CharField(max_length=20)

@@ -1,36 +1,32 @@
-from django.shortcuts import render
 from django.http import HttpResponse, QueryDict
 from django.template import RequestContext, loader
-from helpers import *
 from django.views.decorators.csrf import csrf_exempt
-from trap.models import req_records
-# Create your views here.
+from trap.models import ReqRecords
+from request_helper import CurrentRequest
+
 
 def requests(request):
-    return HttpResponse("You're on the requests page")
+    all_records = ReqRecords.objects.all().order_by('-id')
+
+    context = RequestContext(request, {
+        'all_records': all_records,
+    })
+    template = loader.get_template('request.html')
+    return HttpResponse(template.render(context))
+    # test link = http://127.0.0.1:8000/some/page?value=1&format_field=1
+
 
 @csrf_exempt
-def homepage(request):
-
-    #test limk = http://127.0.0.1:8000/some/page?value=1&foramat_field=1
-    req_array = dict()
-    req_array['req_time'] = get_current_time()
-    req_array['rem_ip'] = get_rem_ip_address(request)
-    req_array['req_method'] = get_request_method(request)
-    req_array['scheme'] = get_request_scheme(request)
-    req_array['query_string'] = get_query_string(request)
-    req_array['query_parameters'] = get_query_parameters(request)
-    req_array['cookies'] = get_cookies(request)
-    req_array['headers'] = get_request_headers(request)
-
-    record = req_records(req_date=req_array['req_time'], rem_ip=req_array['rem_ip'],
-                         req_method=req_array['req_method'], scheme=req_array['scheme'],
-                         query_string=req_array['query_string'], query_parameters=req_array['query_parameters'],
-                         cookies=req_array['cookies'],
-                         headers=req_array['headers'])
+def current_request(request):
+    current_request = CurrentRequest(request)
+    record = ReqRecords(req_date=current_request.req_time, rem_ip=current_request.rem_ip,
+                        req_method=current_request.req_method, scheme=current_request.scheme,
+                        query_string=current_request.query_string, query_parameters=current_request.query_parameters,
+                        cookies=current_request.cookies,
+                        headers=current_request.headers)
     record.save()
     context = RequestContext(request, {
-        'req_array': req_array,
+        'cur_req': current_request,
     })
-    template = loader.get_template('requests.html')
+    template = loader.get_template('all_requests.html')
     return HttpResponse(template.render(context))
