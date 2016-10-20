@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<link rel="icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+<head>
+    <meta charset="UTF-8">
+    <title>Current request page</title>
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+</head>
+<body>
+{% if cur_req %}
+<table border="1">
+   <caption>Current request</caption>
+   <tr>
+    <th>Request date</th>
+    <th>Remote IP</th>
+    <th>Request method</th>
+    <th>Scheme</th>
+    <th>Query string</th>
+    <th>Query parameters</th>
+    <th>Cookies</th>
+    <th>Headers</th>
+   </tr>
+    <tr>
+       <td class="date">{{ cur_req.req_time|date:"M d, Y H:i:s" }}
+       </td>
+       <td>{{ cur_req.rem_ip }}</td>
+       <td>{{ cur_req.req_method }}</td>
+       <td>{{ cur_req.scheme }}</td>
+       <td>{{ cur_req.query_string }}</td>
+       <td>
+            {% for k,v in cur_req.query_parameters.items %}
+            {{k}}: <br>
+                {% for vk, vv in v.items %}
+                <b>{{vk}} :</b> {{vv}}<br>
+                {% endfor %}
+            {% endfor %}
+       </td>
+       <td>{% for cook, val in cur_req.cookies.items %}
+           <b>{{ cook }}</b>={{ val }}<br   >
+           {% endfor %}
+       </td>
+       <td><div class="headers"> {% for key, value in cur_req.headers.items %}
+        <b>{{ key }}</b> -- {{ value }}<br>
+        {% endfor %}</div>
+       </td>
+    </tr>
+    </table>
+{% else %}
+    <p>No data to display</p>
+{% endif %}
+
+</body>
+</html>
