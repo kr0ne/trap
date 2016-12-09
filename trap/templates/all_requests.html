@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}All requests{% endblock %}
+{% block content %}
 {% if all_records %}
-<table border="1">
-    <caption>Previous requests</caption>
-    <tr>
+<div class="page-header text-center">
+    <h1>Previous requests</h1>
+</div>
+<table class="table table-bordered">
+    <thead>>
         <th>Request date</th>
         <th>Remote IP</th>
         <th>Request method</th>
@@ -17,7 +15,7 @@
         <th>Query parameters</th>
         <th>Cookies</th>
         <th>Headers</th>
-    </tr>
+    </thead>
     {% for record in all_records %}
     <tr>
         <td class="date">{{ record.req_date|date:"M d, Y H:i:s" }}
@@ -49,5 +47,4 @@
 {% else %}
     <p>No data to display</p>
 {% endif %}
-</body>
-</html>
+{% endblock %}
