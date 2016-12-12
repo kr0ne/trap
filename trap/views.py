@@ -3,6 +3,7 @@ from django.template import RequestContext, loader
 from django.views.decorators.csrf import csrf_exempt
 from trap.models import ReqRecords
 from request_helper import CurrentRequest
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # test link = http://127.0.0.1:8000/some/page?value=1&format_field=1
 
@@ -19,8 +20,18 @@ def all_requests(request):
         if record.headers:
             temp = eval(record.headers)
             record.headers = temp
+    pages = Paginator(all_records, 10)
+    page = request.GET.get('page')
+    try:
+        records = pages.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        records = pages.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        records = pages.page(pages.num_pages)
     context = RequestContext(request, {
-        'all_records': all_records,
+        'pages': records,
     })
     template = loader.get_template('all_requests.html')
     return HttpResponse(template.render(context))

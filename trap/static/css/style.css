@@ -1,0 +1,18 @@
+.date{
+    width: auto;
+}
+table td{
+    width: auto;
+    text-align: center;
+}
+.headers{
+    text-align: left;
+    margin-left: 10px;
+}
+.param{
+    margin: 15px auto;
+    width: 50%;
+}
+.current_page{
+    color: #08c;
+}
