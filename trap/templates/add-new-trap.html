@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div id="main">
+<div class="text-center top_padding">
+<form id="category_form" method="post" action="add_new_trap" role="form">
+    <div class="form-group">
+        <label for="new_trap">New trap name</label>
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            {% for field in form.visible_fields %}
+                {{ field.errors }}
+            {% endfor %}
+        <input id="id_name" maxlength="30" class="form-control" name="name" placeholder="Enter new trap name" required="" type="text">
+        <input class="btn btn-success" type="submit" name="submit" value="Create" />
+    </div>
+        </form>
+
+
+    <!--<form action="add_new_trap" method="post" role="form">-->
+     <!--<div class="form-group">-->
+      <!--<label for="new_trap">New trap name</label>-->
+      <!--<input type="text" class="form-control" id="new_trap" placeholder="Enter new trap name">-->
+     <!--</div>-->
+     <!--<button type="submit" class="btn btn-success">Создать</button>-->
+    <!--</form>-->
+</div>
+</div>
+{% endblock %}

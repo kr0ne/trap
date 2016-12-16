@@ -2,6 +2,7 @@
 {% block title %}All requests{% endblock %}
 {% block content %}
 {% if pages %}
+<div id="main">
 <div class="page-header text-center">
     <h2>Previous requests</h2>
 </div>
@@ -79,4 +80,5 @@
 {% else %}
     <p>No data to display</p>
 {% endif %}
+    </div>
 {% endblock %}

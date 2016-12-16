@@ -19,6 +19,8 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
+    url(r'traps-list', views.show_traps_list),
+    url(r'^add-new-trap/', views.create_new_trap),
     url(r'^requests/', views.all_requests),
     url(r'^admin/', include(admin.site.urls)),
     url(r'.', views.current_request),

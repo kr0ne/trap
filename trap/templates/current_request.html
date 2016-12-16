@@ -2,6 +2,7 @@
 {% block title %}Current request page{% endblock %}
 {% block content %}
 {% if cur_req %}
+<div id="main">
 <div class="page-header text-center">
     <h2>Current request</h2>
 </div>
@@ -46,6 +47,7 @@
         </tr>
     </tbody>
 </table>
+    </div>
 {% else %}
     <p>No data to display</p>
 {% endif %}
