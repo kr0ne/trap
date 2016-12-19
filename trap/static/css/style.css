@@ -1,6 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 #category_form input{
     margin-bottom:0;
 }
+
+#content h2{
+    font-family: 'Open Sans', sans-serif;
+}
+
 .date{
     width: auto;
 }
@@ -60,8 +67,25 @@ table td{
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url("../img/bg7.jpg");
-    background-repeat: repeat-y;
+    background-image: url("../img/bg_table.png");
+    background-repeat: repeat;
+    width: 100%;
+    height: 100%;
+    opacity : 0.6;
+    z-index: -1;
+}
+#main_test{
+    position: absolute;
+    width: 100%; 
+}
+#main_test:after {
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url("../img/bg_table.png");
+    background-repeat: repeat;
     width: 100%;
     height: 100%;
     opacity : 0.6;
